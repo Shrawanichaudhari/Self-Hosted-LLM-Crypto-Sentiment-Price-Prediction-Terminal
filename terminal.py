@@ -1339,7 +1339,3 @@ with tab4:
         
         with st.expander("📢 Social Signals", expanded=False):
             st.write("Social media sentiment will appear here...")
-
-# --- AUTO REFRESH LOOP (Reduced frequency to prevent flickering) ---
-time.sleep(5.0)
-st.rerun()
