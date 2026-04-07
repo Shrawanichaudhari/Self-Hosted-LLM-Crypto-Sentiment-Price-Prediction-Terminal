@@ -719,8 +719,8 @@ if 'last_fetch' not in st.session_state:
 if 'last_refresh_time' not in st.session_state:
     st.session_state.last_refresh_time = time.time()
 
-def fetch_websocket_prices():
-    """Fetch prices directly from WebSocket server (no caching)"""
+def fetch_live_prices():
+    """Fetch live prices directly from the data engine (no WebSocket required)."""
     try:
         current_time = time.time()
         
@@ -730,31 +730,15 @@ def fetch_websocket_prices():
         
         st.session_state.last_fetch = current_time
         
-        response = requests.get('http://localhost:8000/prices/BTC,ETH,SOL,BNB,ADA', timeout=5)
-        if response.status_code == 200:
-            data = response.json()
-            prices = data.get('prices', {})
-            
-            # Convert to expected format
-            price_data = {}
-            for symbol, price_info in prices.items():
-                key = symbol if 'USDT' in symbol else symbol + 'USDT'
-                price_data[key] = {
-                    'price': float(price_info.get('price', 0)),
-                    'change_24h': float(price_info.get('change_24h', 0)),
-                    'symbol': symbol.replace('USDT', '')
-                }
-            
-            st.session_state.price_data = price_data
-            st.session_state.last_refresh_time = current_time
-            return price_data
-            
+        price_data = engine.get_all_symbols_sentiment(["BTC", "ETH", "SOL", "BNB", "ADA"])
+        st.session_state.price_data = price_data
+        st.session_state.last_refresh_time = current_time
+        return price_data
     except Exception as e:
-        pass
-    
-    return st.session_state.price_data or {}
+        print(f"⚠️ Live price fetch failed: {e}")
+        return st.session_state.price_data or {}
 
-# 💹 REAL-TIME HEATMAP - Using WebSocket Server
+# 💹 REAL-TIME HEATMAP - Live price fetch from Binance engine
 # Auto-refresh every 2 seconds using polling
 if 'init_time' not in st.session_state:
     st.session_state.init_time = time.time()
@@ -764,7 +748,7 @@ current_time = time.time()
 if current_time - st.session_state.init_time > 2:
     st.session_state.init_time = current_time
 
-price_data = fetch_websocket_prices()
+price_data = fetch_live_prices()
 
 # Price cards in a row
 h_cols = st.columns(5)
