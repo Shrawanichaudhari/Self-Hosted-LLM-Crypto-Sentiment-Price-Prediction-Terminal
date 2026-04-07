@@ -1,6 +1,7 @@
 .env
 __pycache__/
 *.pyc
-.streamlit/
+# Keep Streamlit configuration in source control for Cloud deployment
+!.streamlit/config.toml
 venv/
 node_modules/
