@@ -30,7 +30,7 @@ load_dotenv()
 class InstitutionalDataEngine:
     def __init__(self):
         # 1. API Configuration - Using Free APIs (Binance + CoinGecko)
-        self.binance_base_url = "https://api.binance.com/api/v3"
+        self.binance_base_url = "https://api.binance.us/api/v3"
         self.coingecko_base_url = "https://api.coingecko.com/api/v3"
         self.coingecko_api_key = "CG-W25zuSxrr5hM2dFhMXWVTiRQ"
         self.twitter = tweepy.Client(bearer_token=os.getenv('TWITTER_BEARER_TOKEN'))
@@ -454,10 +454,7 @@ class InstitutionalDataEngine:
             try:
                 return self._get_price_from_coingecko(symbol.replace('USDT', '').replace('USDC', '').upper())
             except:
-                mock_prices = {'BTC': 68540.20, 'ETH': 3512.45, 'SOL': 145.30, 'BNB': 598.10, 'ADA': 0.46}
-                mock_changes = {'BTC': 2.4, 'ETH': 1.8, 'SOL': 5.2, 'BNB': -0.5, 'ADA': 1.1}
-                base_sym = symbol.replace('USDT', '').replace('USDC', '').upper()
-                return {'price': mock_prices.get(base_sym, 100.0), 'change_24h': mock_changes.get(base_sym, 0.0), 'symbol': base_sym}
+                return {'price': 0, 'change_24h': 0, 'symbol': symbol}
     
     def _get_price_from_coingecko(self, symbol):
         """Fallback to CoinGecko API if Binance fails."""
@@ -494,10 +491,7 @@ class InstitutionalDataEngine:
         except Exception as e:
             print(f"⚠️ CoinGecko API Error: {e}")
         
-        mock_prices = {'BTC': 68540.20, 'ETH': 3512.45, 'SOL': 145.30, 'BNB': 598.10, 'ADA': 0.46}
-        mock_changes = {'BTC': 2.4, 'ETH': 1.8, 'SOL': 5.2, 'BNB': -0.5, 'ADA': 1.1}
-        base_sym = symbol.replace('USDT', '').replace('USDC', '').upper()
-        return {'price': mock_prices.get(base_sym, 100.0), 'change_24h': mock_changes.get(base_sym, 0.0), 'symbol': base_sym}
+        return {'price': 0, 'change_24h': 0, 'symbol': symbol}
 
     
     def get_all_symbols_sentiment(self, symbols=None):
@@ -512,10 +506,7 @@ class InstitutionalDataEngine:
                 price_dict[symbol + "USDT"] = data
             except Exception as e:
                 print(f"❌ Error fetching price for {symbol}: {e}")
-                mock_prices = {'BTC': 68540.20, 'ETH': 3512.45, 'SOL': 145.30, 'BNB': 598.10, 'ADA': 0.46}
-                mock_changes = {'BTC': 2.4, 'ETH': 1.8, 'SOL': 5.2, 'BNB': -0.5, 'ADA': 1.1}
-                base_sym = symbol.replace('USDT', '').replace('USDC', '').upper()
-                price_dict[symbol + "USDT"] = {'price': mock_prices.get(base_sym, 100.0), 'change_24h': mock_changes.get(base_sym, 0.0), 'symbol': base_sym}
+                price_dict[symbol + "USDT"] = {'price': 0, 'change_24h': 0, 'symbol': symbol}
         
         return price_dict
 
