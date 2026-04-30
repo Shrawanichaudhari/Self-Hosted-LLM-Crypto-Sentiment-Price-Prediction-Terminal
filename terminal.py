@@ -1,3 +1,12 @@
+import sys
+
+# Force UTF-8 encoding for standard output to prevent charmap errors on Windows with emojis
+if sys.stdout and hasattr(sys.stdout, 'reconfigure') and sys.stdout.encoding != 'utf-8':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -769,14 +778,6 @@ for i, sym in enumerate(symbols):
         </div>
         """, unsafe_allow_html=True)
 
-# Add JavaScript for auto-refresh every 2 seconds
-st.markdown("""
-<script>
-    setTimeout(() => {
-        window.location.href = window.location.href;
-    }, 2000);
-</script>
-""", unsafe_allow_html=True)
 
 st.divider()
 

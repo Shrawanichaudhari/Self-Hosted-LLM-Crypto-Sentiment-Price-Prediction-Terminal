@@ -2,6 +2,15 @@
 WebSocket-based Real-Time Crypto Data Server
 Streams live price updates to connected clients with 0 delay
 """
+import sys
+
+# Force UTF-8 encoding for standard output to prevent charmap errors on Windows with emojis
+if sys.stdout and hasattr(sys.stdout, 'reconfigure') and sys.stdout.encoding != 'utf-8':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
 import asyncio
 import json
 import logging

@@ -31,6 +31,6 @@ timeout /t 3 /nobreak
 
 REM Start the Streamlit dashboard
 echo 🎨 Starting Streamlit Dashboard on http://localhost:8501
-streamlit run streamlit_dashboard.py --client.showErrorDetails=true
+streamlit run terminal.py --client.showErrorDetails=true
 
 pause

@@ -354,4 +354,4 @@ This project is open source and available under the MIT License.
 
 **Made with ❤️ for crypto enthusiasts and traders**
 
-*Last Updated: April 2024*
+*Last Updated: April 2026*
