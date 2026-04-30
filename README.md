@@ -1,6 +1,9 @@
 # 🚀 Self-Hosted Crypto Intelligence Terminal
 **NMIMS INNOVATHON 2026 | Challenge 2: AI & Data Intelligence**
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://self-hosted-llm-crypto-sentiment-price-prediction-terminal-kjf.streamlit.app/)
+**Live Demo:** [https://self-hosted-llm-crypto-sentiment-price-prediction-terminal-kjf.streamlit.app/](https://self-hosted-llm-crypto-sentiment-price-prediction-terminal-kjf.streamlit.app/)
+
 ## 1. Executive Summary
 A full-stack trading intelligence terminal using **locally-hosted LLMs (Mistral 7B)** to analyze social sentiment and **Prophet** for time-series forecasting. [cite_start]The system provides real-time, explainable trading signals without relying on expensive cloud APIs[cite: 19, 20].
 
