@@ -339,7 +339,7 @@ class InstitutionalDataEngine:
                 
                 if not klines or len(klines) == 0:
                     print(f"⚠️ No data returned for {trading_pair}")
-                    return None
+                    raise Exception("No data returned from Binance")
                 
                 # Parse klines data - Binance format:
                 # [time, open, high, low, close, volume, closeTime, quoteVolume, trades, takerBuyBaseVolume, takerBuyQuoteVolume, ignore]
@@ -360,7 +360,7 @@ class InstitutionalDataEngine:
                 return df[['timestamp', 'open', 'high', 'low', 'close', 'volume']]
             else:
                 print(f"⚠️ API Error: {response.status_code}")
-                return None
+                raise Exception(f"Binance API Error {response.status_code}")
                 
         except Exception as e:
             print(f"❌ Error fetching price data: {e}")
